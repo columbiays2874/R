@@ -1,0 +1,27 @@
+corr <- function(directory, threshold = 0) {
+    setwd("/Users/shiyuchen/R")
+    setwd(directory)
+    apdata <- dir()
+    allcomplete <- complete("specdata", 1:332)
+    finalvector <- c()
+    count1 <- 1
+    for(i in seq_len(nrow(allcomplete))) {
+        if(allcomplete[i, 2] > threshold) {
+            tempdata <- read.csv(apdata[i])
+            count2 <- 1
+            sulfate <- c()
+            nitrate <- c()
+            for(j in seq_len(nrow(tempdata))){
+                if(is.na(tempdata[j, 2]) == FALSE && is.na(tempdata[j, 3]) == FALSE) {
+                    sulfate[count2] <- tempdata[j, 2]
+                    nitrate[count2] <- tempdata[j, 3]
+                    count2 <- count2 + 1
+                }
+            }
+            finalvector[count1] <- cor(sulfate, nitrate)
+            count1 <- count1 + 1
+        } 
+    }
+    setwd("/Users/shiyuchen/R")
+    finalvector[]
+}
