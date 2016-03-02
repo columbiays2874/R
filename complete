@@ -1,0 +1,22 @@
+complete <- function(directory, id) {
+    setwd("/Users/shiyuchen/R")
+    setwd(directory)
+    apdata <- dir()
+    returndf <- data.frame()
+    count <- 1
+    for(i in id) {
+        eachdata <- read.csv(apdata[i])
+        returndf[count, 1] <- i
+        returndf[count, 2] <- 0
+        
+        for(j in seq_len(nrow(eachdata))) {
+            if(is.na(eachdata[j,2]) == FALSE && is.na(eachdata[j,3]) == FALSE) {
+                returndf[count, 2] <- returndf[count, 2] + 1
+            }
+        }
+        count <- count + 1
+    }
+    names(returndf) <- c("id", "nobs")
+    setwd("/Users/shiyuchen/R")
+    returndf[]
+}
