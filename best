@@ -1,0 +1,48 @@
+best <- function(state, outcome) {
+    setwd("/Users/shiyuchen/R/rprog-data-ProgAssignment3-data")
+    data <- read.csv("outcome-of-care-measures.csv")
+    if(outcome == "heart attack") {
+        bestdata <- data[, 11]
+    } else if(outcome == "heart failure") {
+        bestdata <- data[, 17]
+    } else if(outcome == "pneumonia") {
+        bestdata <- data[, 23]
+    } else {
+        stop("invalid outcome")
+    }
+    bestdata <- as.numeric(as.character(bestdata))
+    statename <- data[, 7]
+    hospitalname <- data[, 2]
+    hospitalname <- as.character(hospitalname)
+    statename <- as.character(statename)
+    statedata <- data.frame()
+    j <- 1
+    p <- 0
+    for(i in seq_len(nrow(data))) {
+        if(state == statename[i]) {
+            p <- 1
+        }
+    }
+    if(p == 0){
+        stop("invalid state")
+    }
+
+    for(i in seq_len(nrow(data))) {
+        if(statename[i] == state && is.na(bestdata[i]) == FALSE) {
+            statedata[j, 1] <- hospitalname[i]
+            statedata[j, 2] <- bestdata[i]
+            j <- j + 1
+        }
+    }
+    lowest <- statedata[1, 2]
+    k <- 1
+    knum <- 1
+    for (k in seq_len(nrow(statedata))) {
+        if(statedata[k, 2] < lowest) {
+            lowest <- statedata[k, 2]
+            knum <- k
+        }
+    }
+    returnedvector <- statedata[knum, 1]
+    returnedvector
+}
