@@ -1,0 +1,49 @@
+install.packages('ggplot2')
+library(ggplot2)
+x <- rnorm(50)
+ggplot() + geom_histogram(aes(x=x), binwidth = 0.1)
+#aes stat plot
+my.data <- rnorm(1000)
+ggplot() + geom_histogram(aes(x=my.data), binwidth = 0.1)
+ggplot() + geom_histogram(aes(x=my.data), bins = 20)
+ggplot() + geom_histogram(aes(x=my.data), binwidth = 0.1, color='blue')
+ggplot() + geom_histogram(aes(x=my.data), binwidth = 0.1, fill='blue')
+ggplot() + geom_histogram(aes(x=my.data), binwidth = 0.1, fill='blue', alpha=0.3)
+
+ggplot() + geom_histogram(aes(x=my.data), binwidth = 0.1, 
+                          fill='blue', alpha=0.3)
+p <- ggplot() + geom_density(aes(x=my.data), fill='green', color='blue') +
+    ggtitle('My plot')
+p + ylab('my label')
+p
+p+ coord_cartesian(xlim=c(2,3))
+p+ coord_cartesian(xlim=c(2,3))+ ggtitle('zoom in')+
+    xlab('data')+ylab('density')
+p
+
+
+x <- seq(-3, 3, 0.1)
+y <- x*3+x^2 + sin(x) - cos(x) + rnorm(length(x), sd=3)
+ggplot() + geom_point(aes(x=x, y=y))
+ggplot() + geom_point(aes(x=x, y=y))+geom_smooth(aes(x=x, y=y))
+ggplot() + geom_point(aes(x=x, y=y))+geom_smooth(aes(x=x, y=y), method=loess)
+
+
+sleep <- rnorm(100, mean = 6, sd=1)
+grade <- sleep + sleep^2 /10 + rnorm(100, sd=1)
+df <- data.frame(sleep, grade)
+ggplot(data=df, aes(x=sleep, y=grade)) + geom_point() + geom_smooth()
+
+class <- rep.int(c(0,1), c(50, 50))
+x <- runif(100, min=10, max=20)
+y <- 5*x + 40 + rnorm(100, sd=10) + class*-2*x
+df <- data.frame(input=x, output=y, condition=class)
+ggplot(df, aes(x=input, y=output))
+ggplot(df, aes(x=input, y=output)) + geom_point()
+ggplot(df, aes(x=input, y=output)) + geom_point() + facet_grid(.~condition)
+ggplot(df, aes(x=input, y=output)) + geom_point() + facet_grid(.~condition)+
+    geom_smooth()
+ggplot(df, aes(x=input, y=output)) + geom_point() + facet_grid(.~condition)+
+    geom_smooth()+theme_classic()
+ggplot(df, aes(x=input, y=output)) + geom_point() + facet_grid(.~condition)+
+    geom_smooth()+theme_minimal()
