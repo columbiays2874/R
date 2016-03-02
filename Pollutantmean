@@ -1,0 +1,24 @@
+pollutantmean <- function(directory, pollutant, id = 1:332) {
+    setwd("/Users/shiyuchen/R")
+    setwd(directory)
+    testdata <- data.frame()
+    for(i in id) {
+        if(i >= 1 && i <= 9) {
+            tempdata <- read.csv(paste("00", i, ".csv", sep = ""))
+        } else if(i >= 10 && i <= 99) {
+            tempdata <- read.csv(paste("0", i, ".csv", sep = ""))
+        } else if(i >= 100 && i <= 999) {
+            tempdata <- read.csv(paste(i, ".csv", sep = ""))
+        }
+        testdata <- rbind(testdata, tempdata)
+    }
+    if(pollutant == "sulfate") {
+        data <- testdata[2]
+    } else if(pollutant == "nitrate") {
+        data <- testdata[3]
+    }
+    bad <- is.na(data)
+    m <- mean(data[!bad])
+    setwd("/Users/shiyuchen/R")
+    m
+}
